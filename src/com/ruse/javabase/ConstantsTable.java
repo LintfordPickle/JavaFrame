@@ -1,4 +1,4 @@
-package test;
+package com.ruse.javabase;
 
 public class ConstantsTable {
 

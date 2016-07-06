@@ -1,4 +1,4 @@
-package test;
+package com.ruse.javabase.graphics;
 
 // http://www.java-gaming.org/index.php?topic=24529.0
 public class ArtCompositor {

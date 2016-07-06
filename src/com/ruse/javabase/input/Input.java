@@ -1,4 +1,4 @@
-package test;
+package com.ruse.javabase.input;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

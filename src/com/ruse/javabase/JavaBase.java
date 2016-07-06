@@ -1,6 +1,5 @@
-package test;
+package com.ruse.javabase;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,10 +7,12 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import com.ruse.javabase.graphics.Art;
+import com.ruse.javabase.graphics.Bitmap;
+import com.ruse.javabase.graphics.Display;
+import com.ruse.javabase.input.Input;
 
-public class Base extends Canvas implements Runnable {
+public abstract class JavaBase extends Canvas implements Runnable {
 
 	// ---------------------------------------
 	// Constants
@@ -28,7 +29,6 @@ public class Base extends Canvas implements Runnable {
 
 	private Display mDisplay;
 	private Input mInput;
-	private Game mGame;
 
 	private final int width;
 	private final int height;
@@ -41,7 +41,7 @@ public class Base extends Canvas implements Runnable {
 	// Constructor
 	// ---------------------------------------
 
-	public Base() {
+	public JavaBase() {
 		width = ConstantsTable.WINDOW_WIDTH * ConstantsTable.WINDOW_SCALE;
 		height = ConstantsTable.WINDOW_HEIGHT * ConstantsTable.WINDOW_SCALE;
 
@@ -51,7 +51,6 @@ public class Base extends Canvas implements Runnable {
 		setMinimumSize(lSize);
 		setMaximumSize(lSize);
 
-		mGame = new Game();
 		mDisplay = new Display(width, height);
 
 		mBufferedImage = new BufferedImage(ConstantsTable.WINDOW_WIDTH * ConstantsTable.WINDOW_SCALE, ConstantsTable.WINDOW_HEIGHT * ConstantsTable.WINDOW_SCALE, BufferedImage.TYPE_INT_RGB);
@@ -158,27 +157,6 @@ public class Base extends Canvas implements Runnable {
 
 	}
 
-	// ---------------------------------------
-	// Entry Point
-	// ---------------------------------------
-
-	public static void main(String[] args) {
-		Base lBase = new Base();
-
-		JFrame lFrame = new JFrame("Test");
-
-		JPanel lPanel = new JPanel(new BorderLayout());
-		lPanel.add(lBase, BorderLayout.CENTER);
-
-		lFrame.setContentPane(lPanel);
-		lFrame.pack();
-		lFrame.setLocationRelativeTo(null);
-		lFrame.setResizable(true);
-		lFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		lFrame.setVisible(true);
-
-		lBase.start();
-
-	}
+	
 
 }

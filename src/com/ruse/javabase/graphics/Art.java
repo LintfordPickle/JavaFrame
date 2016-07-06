@@ -1,4 +1,4 @@
-package test;
+package com.ruse.javabase.graphics;
 
 import java.awt.image.BufferedImage;
 
