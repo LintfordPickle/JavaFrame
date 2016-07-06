@@ -11,8 +11,6 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.ruse.javabase.graphics.Art;
-import com.ruse.javabase.graphics.Bitmap;
 import com.ruse.javabase.graphics.Display;
 import com.ruse.javabase.input.Input;
 
@@ -39,9 +37,15 @@ public abstract class JavaBase extends Canvas implements Runnable {
 	private final int width;
 	private final int height;
 
-	private float sinTime;
-
 	private BufferedImage mBufferedImage;
+
+	// ---------------------------------------
+	// Properties
+	// ---------------------------------------
+
+	public Display display() {
+		return mDisplay;
+	}
 
 	// ---------------------------------------
 	// Constructor
@@ -73,10 +77,10 @@ public abstract class JavaBase extends Canvas implements Runnable {
 	// Methods
 	// ---------------------------------------
 
-	public void openWindow(){
-		if(mWindowOpen) return;
-		
-		
+	public void openWindow() {
+		if (mWindowOpen)
+			return;
+
 		JFrame lFrame = new JFrame(mWindowTitle);
 
 		JPanel lPanel = new JPanel(new BorderLayout());
@@ -88,13 +92,13 @@ public abstract class JavaBase extends Canvas implements Runnable {
 		lFrame.setResizable(true);
 		lFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lFrame.setVisible(true);
-		
+
 		mWindowOpen = true;
 
 		start();
-		
+
 	}
-	
+
 	@Override
 	public void run() {
 
@@ -112,42 +116,20 @@ public abstract class JavaBase extends Canvas implements Runnable {
 
 	}
 
-	private void loadResources() {
+	protected void loadResources() {
 
 	}
 
-	private void handleInput() {
+	protected void handleInput() {
 
 	}
 
-	private void update() {	
-		sinTime++;
-		Bitmap blue = new Bitmap(8, 8);
-		blue.clear(0xffececec);
-
-		mDisplay.clear(0x00000000);
-		
- 		mDisplay.draw(Art.items, 164, 150, 0, 0, 128, 128, 1);
- 		mDisplay.draw(Art.items, 144, 140, 0, 0, 128, 128, 1);
- 		mDisplay.draw(Art.items, 124, 130, 0, 0, 128, 128, 1);
- 		mDisplay.draw(Art.items, 104, 120, 0, 0, 128, 128, 1);
- 		
-		mDisplay.drawString(Art.font, "Hello world\nPress PLAY on tape", 5, 5);
-		
-		final int repeat = 5;
-		for (int i = 0; i < repeat; i++) {
-
-			int posX = (int) ((width / 2) + Math.sin((sinTime + i * 500) * 0.001f) * 300);
-			int posY = (int) ((height / 2) + Math.cos((sinTime + i * 500) * 0.0005f) * 200);
-
-			mDisplay.draw(blue, posX - 4, posY - 4);
-		}
-		
+	protected void update() {
+		mDisplay.clear(0xff000000);
 
 	}
 
-	private void render() {
-
+	protected void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
@@ -159,6 +141,7 @@ public abstract class JavaBase extends Canvas implements Runnable {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(mBufferedImage, 0, 0, getWidth(), getHeight(), null);
 		g.dispose();
+
 		bs.show();
 
 	}

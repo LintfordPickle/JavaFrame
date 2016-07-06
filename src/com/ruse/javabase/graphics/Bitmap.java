@@ -16,11 +16,11 @@ public class Bitmap {
 	}
 
 	public void draw(Bitmap b, int dx, int dy) {
-		draw(b, dx, dy, 0, 0, b.width, b.height, 1);
+		draw(b, dx, dy, 0, 0, b.width, b.height, 1, 255);
 
 	}
 
-	public void draw(Bitmap b, int dx, int dy, int sx, int sy, int sw, int sh, int scale) {
+	public void draw(Bitmap b, int dx, int dy, int sx, int sy, int sw, int sh, int scale, int alpha) {
 		for (int x = 0; x < sw; x++) {
 			for (int y = 0; y < sh; y++) {
 				int srcX = x + sx;
@@ -40,12 +40,8 @@ public class Bitmap {
 
 				int srcP = b.pixels[srcY * b.width + srcX];
 				int dstP = pixels[dstY * width + dstX];
-				
-				int tmp0 = ArtCompositor.blendPixel_Add(dstP, srcP);
-				int tmp1 = ArtCompositor.unpremultiply( tmp0 );
 								
-				// Assign the new color
-				pixels[dstY * width + dstX] = tmp0;
+				pixels[dstY * width + dstX] = ArtCompositor.blendPixel_Multiply(dstP, srcP, alpha);
 
 			}
 
@@ -53,7 +49,7 @@ public class Bitmap {
 
 	}
 
-	public void drawString(Bitmap b, String t, int dx, int dy) {
+	public void drawString(Bitmap b, String t, int dx, int dy, int alpha) {
 		if (t == null || t.isEmpty())
 			return;
 
@@ -80,7 +76,7 @@ public class Bitmap {
 			int sx = charIndex % 16;
 			int sy = charIndex / 16;
 
-			draw(b, dx + charStepX, dy + charStepY, sx * 8, sy * 8, 8, 8, 1);
+			draw(b, dx + charStepX, dy + charStepY, sx * 8, sy * 8, 8, 8, 1, alpha);
 
 			charStepX += charWidth;
 

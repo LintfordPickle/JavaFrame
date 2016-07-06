@@ -43,20 +43,26 @@ public class ArtCompositor {
 		}
 	}
 
-	public static int blendPixel_Multiply(int dstPx, int srcPx) {
+	public static int blendPixel_Multiply(int dstPx, int srcPx, int alpha) {
 		int destPx = dstPx;
 		int srcA = srcPx >>> 24;
 		int srcR = (srcPx & RED_MASK) >>> 16;
 		int srcG = (srcPx & GREEN_MASK) >>> 8;
 		int srcB = (srcPx & BLUE_MASK);
 
+		if (alpha != 255) {
+			srcR = mult(srcR, alpha);
+			srcG = mult(srcG, alpha);
+			srcB = mult(srcB, alpha);
+			srcA = mult(srcA, alpha);
+		}
+
 		int destA = (destPx) >>> 24;
 		int destR = (destPx & RED_MASK) >>> 16;
 		int destG = (destPx & GREEN_MASK) >>> 8;
 		int destB = (destPx & BLUE_MASK);
 		final int oneMinusSrcA = 0xff - srcA, oneMinusDstA = 0xff - destA;
-		return blend(srcA, destA, srcA) << 24 | (mult(srcR, destR) + mult(destR, oneMinusSrcA) + mult(srcR, oneMinusDstA)) << 16
-				| (mult(srcG, destG) + mult(destG, oneMinusSrcA) + mult(srcG, oneMinusDstA)) << 8 | mult(srcB, destB) + mult(destB, oneMinusSrcA) + mult(srcB, oneMinusDstA);
+		return blend(srcA, destA, srcA) << 24 | (mult(srcR, destR) + mult(destR, oneMinusSrcA) + mult(srcR, oneMinusDstA)) << 16 | (mult(srcG, destG) + mult(destG, oneMinusSrcA) + mult(srcG, oneMinusDstA)) << 8 | mult(srcB, destB) + mult(destB, oneMinusSrcA) + mult(srcB, oneMinusDstA);
 	}
 
 	public static int blendPixel_Add(int dstPx, int srcPx) {
