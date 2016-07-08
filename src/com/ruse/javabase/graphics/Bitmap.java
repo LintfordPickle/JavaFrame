@@ -2,10 +2,22 @@ package com.ruse.javabase.graphics;
 
 public class Bitmap {
 
+	// ---------------------------------------
+	// Constants
+	// ---------------------------------------
+
 	private String characterSequence = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!\"$%-_&()[]?\\/<>.;:;|";
+
+	// ---------------------------------------
+	// Variables
+	// ---------------------------------------
 
 	public final int width, height;
 	public int[] pixels;
+
+	// ---------------------------------------
+	// Constructor
+	// ---------------------------------------
 
 	public Bitmap(int w, int h) {
 		width = w;
@@ -15,19 +27,23 @@ public class Bitmap {
 
 	}
 
+	// ---------------------------------------
+	// Methods
+	// ---------------------------------------
+
 	public void draw(Bitmap b, int dx, int dy) {
-		draw(b, dx, dy, 0, 0, b.width, b.height, 1, 255);
+		draw(b, dx, dy, 0, 0, b.width, b.height, 1);
 
 	}
 
-	public void draw(Bitmap b, int dx, int dy, int sx, int sy, int sw, int sh, int scale, int alpha) {
-		for (int x = 0; x < sw; x++) {
-			for (int y = 0; y < sh; y++) {
+	public void draw(Bitmap b, int dx, int dy, int sx, int sy, int sw, int sh, int scale) {
+		for (int x = 0; x < sw * scale; x++) {
+			for (int y = 0; y < sh * scale; y++) {
 				int srcX = x + sx;
 				int srcY = y + sy;
-				if (srcX < 0 || srcX >= b.width)
+				if (srcX < 0 || srcX >= b.width * scale)
 					continue;
-				if (srcY < 0 || srcY >= b.height)
+				if (srcY < 0 || srcY >= b.height * scale)
 					continue;
 
 				int dstX = dx + x;
@@ -38,9 +54,37 @@ public class Bitmap {
 				if (dstY < 0 || dstY > height - 1)
 					continue;
 
-				int srcP = b.pixels[srcY * b.width + srcX];
+				int srcP = b.pixels[srcY / scale * b.width + srcX / scale];
+
+				pixels[dstY * width + dstX] = srcP;
+
+			}
+
+		}
+
+	}
+
+	public void drawMultiply(Bitmap b, int dx, int dy, int sx, int sy, int sw, int sh, int scale, int alpha) {
+		for (int x = 0; x < sw * scale; x++) {
+			for (int y = 0; y < sh * scale; y++) {
+				int srcX = x + sx;
+				int srcY = y + sy;
+				if (srcX < 0 || srcX >= b.width * scale)
+					continue;
+				if (srcY < 0 || srcY >= b.height * scale)
+					continue;
+
+				int dstX = dx + x;
+				int dstY = dy + y;
+
+				if (dstX < 0 || dstX > width - 1)
+					continue;
+				if (dstY < 0 || dstY > height - 1)
+					continue;
+
+				int srcP = b.pixels[srcY / scale * b.width + srcX / scale];
 				int dstP = pixels[dstY * width + dstX];
-								
+
 				pixels[dstY * width + dstX] = ArtCompositor.blendPixel_Multiply(dstP, srcP, alpha);
 
 			}
@@ -76,7 +120,7 @@ public class Bitmap {
 			int sx = charIndex % 16;
 			int sy = charIndex / 16;
 
-			draw(b, dx + charStepX, dy + charStepY, sx * 8, sy * 8, 8, 8, 1, alpha);
+			drawMultiply(b, dx + charStepX, dy + charStepY, sx * 8, sy * 8, 8, 8, 1, alpha);
 
 			charStepX += charWidth;
 
