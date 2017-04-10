@@ -26,35 +26,64 @@ public abstract class JavaBase extends Canvas implements Runnable {
 	// Variables
 	// ---------------------------------------
 
+	/**  */
 	private Thread mGameThread;
+	private String mWindowTitle;
 	private boolean mIsRunning;
 	private boolean mWindowOpen;
-	private String mWindowTitle;
 
 	private Display mDisplay;
 	private Input mInput;
 
-	private final int width;
-	private final int height;
+	/** The width of the window (and {@link BufferedImage}. */
+	public final int width;
 
+	/** The height of the window (and {@link BufferedImage}. */
+	public final int height;
+
+	/**
+	 * The {@link BufferedImage} we draw onto the screen at the end of each
+	 * render.
+	 */
 	private BufferedImage mBufferedImage;
 
 	// ---------------------------------------
 	// Properties
 	// ---------------------------------------
 
+	/**
+	 * Returns the {@link Display} instance created with teh {@link JavaBase}.
+	 * {@link Display} is a bitmap class, which we draw into during the render
+	 * method.
+	 */
 	public Display display() {
 		return mDisplay;
+	}
+
+	/**
+	 * Returns the {@link Input} class, which tracks user input from the mouse
+	 * and keyboard over time.
+	 */
+	public Input input() {
+		return mInput;
+	}
+
+	/**
+	 * Returns true if the game has been started, false otherwise. Use start()
+	 * to start() the game, and stop() to stop it.
+	 */
+	public boolean isGameRunning() {
+		return mIsRunning;
 	}
 
 	// ---------------------------------------
 	// Constructor
 	// ---------------------------------------
 
-	public JavaBase(String pWindowTitle) {
+	public JavaBase(String pWindowTitle, final int pWindowWidth, final int pWindowHeight) {
 		mWindowTitle = pWindowTitle;
-		width = ConstantsTable.WINDOW_WIDTH * ConstantsTable.WINDOW_SCALE;
-		height = ConstantsTable.WINDOW_HEIGHT * ConstantsTable.WINDOW_SCALE;
+		width = pWindowWidth;
+		height = pWindowHeight;
 
 		Dimension lSize = new Dimension(width, height);
 		setSize(lSize);
@@ -64,7 +93,7 @@ public abstract class JavaBase extends Canvas implements Runnable {
 
 		mDisplay = new Display(width, height);
 
-		mBufferedImage = new BufferedImage(ConstantsTable.WINDOW_WIDTH * ConstantsTable.WINDOW_SCALE, ConstantsTable.WINDOW_HEIGHT * ConstantsTable.WINDOW_SCALE, BufferedImage.TYPE_INT_RGB);
+		mBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		mDisplay.pixels = ((DataBufferInt) mBufferedImage.getRaster().getDataBuffer()).getData();
 
 		mInput = new Input();
