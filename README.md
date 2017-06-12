@@ -1,5 +1,5 @@
 # JavaFrame
-This is a basic collection of classes to quickly get setup with a Java game project using AWT and software rendering.
+This is a basic collection of classes to quickly get setup with a Java game project using AWT and software rendering. The software rendering uses a [Bit Blit](https://en.wikipedia.org/wiki/Bit_blit).
 
 # Getting the Repository
 You can get the JavaFrame project by either by cloning the repository or by adding it as a submodule to an existing git repository.
