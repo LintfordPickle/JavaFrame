@@ -50,7 +50,6 @@ public class SampleWindow extends JavaBase {
 
 	public SampleWindow(String pWindowTitle) {
 		super(pWindowTitle);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
