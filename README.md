@@ -39,7 +39,7 @@ Once you have done this, you can now import JavaFrame packages and access the cl
 
 After you have linked the library to your game application's classpath, you need to create a subclass of the JavaBase class. This contains the code for opening an AWT window and preparing the buffered images and bitmaps for rendering to the window. For the minimal setup, use:
 
-```
+```Java
 package com.ruse.javaframe.samples;
 
 import com.ruse.javabase.JavaBase;
