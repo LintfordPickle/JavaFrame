@@ -1,5 +1,7 @@
-# JavaFrame
+# Introduction: JavaFrame
 This is a basic collection of classes to quickly get setup with a Java game project using AWT and software rendering. The software rendering uses a [Bit Blit](https://en.wikipedia.org/wiki/Bit_blit).
+
+The development of this project takes place predominantly during the Ludum Dare game jam events. It therefore misses the benefits of code review, comprehensive unit testing or the application of many clean code principles. It is strongly recommended to **not use this code ina production environment**.
 
 # Getting the Repository
 You can get the JavaFrame project by either by cloning the repository or by adding it as a submodule to an existing git repository.
