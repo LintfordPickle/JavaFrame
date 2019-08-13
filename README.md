@@ -63,7 +63,7 @@ public class SampleWindow extends JavaBase {
 
 ```
 
-#Using JavaFrame (Gameloop)
+# Using JavaFrame (Gameloop)
 
 JavaBase is an abstract class which allows you to quickly create a window. It also provides methods which can be overriden, allowing you to create you own interactive application. The methods which you can override are:
 
